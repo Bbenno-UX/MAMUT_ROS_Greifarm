@@ -19,7 +19,7 @@ verwiesen und empfohlen, diese entweder in Python oder C++ einmal auszutesten.
 
 vorab sei empfohlen, benötigte Packages zu installieren:
 
-sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi doxygen git python3
+    sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi doxygen git python3
 
 
 Als Mikrocontroller wurde an der stelle der Raspberry Pi Pico genutzt, was heißt, dass das PICO-SDK hierfür installiert sein muss. Falls nicht vorhanden, kann die Datei:
@@ -34,7 +34,7 @@ Wichtig ist es hier, die Umgebungsvariable:
 "PICO_SDK_PATH"
 zu setzen.
 Dies kann durch einen Befehl wie: 
-export PICO_SDK_PATH=(Installationspfad)/pico/pico-sdk
+    export PICO_SDK_PATH=(Installationspfad)/pico/pico-sdk
 getätigt werden.
 
 Ist die .uf2 Datei für den Flash des Pico nun geladen, muss der micro-ros-agent verbindung zum pico aufnehmen, damit dieser mit dem Rest des ROS-Netzwerks
@@ -42,41 +42,43 @@ kommunizieren kann.
 
 Der micro-ros-agent ist nicht standardmäßig installiert. Er kann entweder installiert werden durch: 
 
-sudo snap install micro-ros-agent
+    sudo snap install micro-ros-agent
 
 ODER durch den micro-ros-setup erstellt werden:
 https://micro.ros.org/docs/tutorials/core/first_application_linux/
 
 genutzt wurde bislang nur ubuntu. Für ubuntu muss noch das Kommando:
 
-sudo snap set core experimental.hotplug=true && sudo systemctl restart snapd
+    sudo snap set core experimental.hotplug=true && sudo systemctl restart snapd
 
 ausgeführt werden.
 Um zu schauen, dass der Pico verbunden ist, hilft das Kommando:
 
-snap interface serial-port
+    snap interface serial-port
 
 Ist er verbunden, muss der micro-ros-agent mit dem Port verbunden werden:
 
-snap connect micro-ros-agent:serial-port snapd:pico
+    snap connect micro-ros-agent:serial-port snapd:pico
 
 Jetzt kann endlich der Node gestartet werden mit:
 
-micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
+    micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
 
 Durch das öffnen eines neuen Terminals kann der erfolgreiche Start mit :
 
-ros2 node list
+    ros2 node list
 
 geprüft werden.
 
 für den rviz-teil wird empfohlen, in den ros-workspace zu gehen und das kommando:
 
-colcon build --packages-select rviz_Greifarm
+    colcon build --packages-select rviz_Greifarm
 
 auszuführen
 zuletzt ist in den Package-Pfad zu gehen:
-cd rviz_Greifarm und dann final das Kommando:
+    cd rviz_Greifarm 
+    
+    und dann final das Kommando:
 
     ros2 launch rviz_Greifarm display.launch.py model:=urdf/Eurobot_konzept_idee.urdf
 
