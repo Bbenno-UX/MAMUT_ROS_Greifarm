@@ -1,0 +1,16 @@
+source /opt/ros/rolling/setup.bash
+micro_ros_setup klonen
+2 publisher_subscriber paare
+im prinzip einfach pi pico sdk installieren
+git clone und build pico microros examples
+es ist zu schauen, ob der serial port dne pico erkennt und wie der heißt (meistens pico, kann aber auch sowas wie pico-1 sein)
+snap interface serial-port
+für verbindung
+snap connect micro-ros-agent:serial-port snapd:pico
+micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200 
+wird einen seriellen npode startem, natürlich im jeweiligen port
+vorraussetzung: ros node geflasht
+ros2 topic echo /pico_publisher
+wird dann einen listener kreieren#
+bei fault (cannot use destroyable fehlermeldung):
+ros2 daemon stop && ros2 daemon start
