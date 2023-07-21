@@ -78,7 +78,7 @@ auszuführen
 zuletzt ist in den Package-Pfad zu gehen:
     cd rviz_Greifarm 
     
-    und dann final das Kommando:
+und dann final das Kommando:
 
     ros2 launch rviz_Greifarm display.launch.py model:=urdf/Eurobot_konzept_idee.urdf
 
