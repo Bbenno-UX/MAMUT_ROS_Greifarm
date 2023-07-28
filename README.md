@@ -52,7 +52,8 @@ genutzt wurde bislang nur ubuntu. Für ubuntu muss noch das Kommando:
 
     sudo snap set core experimental.hotplug=true && sudo systemctl restart snapd
 
-ausgeführt werden.
+ausgeführt werden. 
+
 **Pico:**
 Um zu schauen, dass der Pico verbunden ist, hilft das Kommando:
 
@@ -65,6 +66,7 @@ Ist er verbunden, muss der micro-ros-agent mit dem Port verbunden werden:
 Jetzt kann endlich der Node gestartet werden mit:
 
     micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
+    
 **OPENCR-Board**:
 Das repo wurde nicht für das OpenCR-Board erstellt. Da es in vergleichbarer Form jedoch später auf diesem laufen soll, wird auf as Board eingegangen.
 für einen Start mit dem durch den micro-ros-setup muss dieser verfügbar sein, das geht durch das Kommando:
