@@ -74,6 +74,7 @@ Das repo wurde nicht für das OpenCR-Board erstellt. Da es in vergleichbarer For
 für einen Start mit dem durch den micro-ros-setup muss dieser verfügbar sein, das geht durch das Kommando:
     source (microros_agent_pfad)/install/setup.bash
 
+am besten an der Stelle den RESET-Knopf am Board drücken, um die Verbindung initialisieren zu können
 dann starten durch das Kommando:
     ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
 
