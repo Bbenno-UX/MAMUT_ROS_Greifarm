@@ -7,10 +7,11 @@ Die Roboterteile können als STL mesh gegeben (wie in diesem Fall, diese befinde
 Rviz, das diese urdf-Datei ausliest, gibt den aktuellen status eines Freiheitsgerades (joints, welche nicht die Bezeichnung "fixed" hat) also sogenannte 
 jointstate-msg aus.
 Diese message besteht aus:
-	-Name des Joints
-	-Position
-	-Geschwindigkeit
-	-Kraft
+
+	-Name des Joints 
+	-Position 
+	-Geschwindigkeit 
+	-Kraft 
 alle als Datenfeld gegeben. Die Position in dem Datenfeld gibt die "nummer" des joints wieder, position[1] ist die position des zweiten joints.
 Diese Message kann von einem micro-ROS Node, der auf einem Mikrocontroller wie dem Raspberry Pi Pico läuft, "gehört" werden.
 Zu den Grundprinzipien wie Publishe rund Subscriber wird auf:
