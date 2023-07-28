@@ -46,12 +46,14 @@ Der micro-ros-agent ist nicht standardmäßig installiert. Er kann entweder inst
 
 ODER durch den micro-ros-setup erstellt werden:
 https://micro.ros.org/docs/tutorials/core/first_application_linux/
-
+WICTHIG: für Turtlebot-Nutzer wird empfohlen, die Umgebungsvariable "ROS_DOMAIN_ID" nicht zu setzen, sonst findet ROS den microros-node nicht
+AUSSERDEM: für das OpenCR board wird der micro-ros-setup empfohlen. 
 genutzt wurde bislang nur ubuntu. Für ubuntu muss noch das Kommando:
 
     sudo snap set core experimental.hotplug=true && sudo systemctl restart snapd
 
 ausgeführt werden.
+**Pico:**
 Um zu schauen, dass der Pico verbunden ist, hilft das Kommando:
 
     snap interface serial-port
@@ -63,8 +65,16 @@ Ist er verbunden, muss der micro-ros-agent mit dem Port verbunden werden:
 Jetzt kann endlich der Node gestartet werden mit:
 
     micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
+**OPENCR-Board**:
+Das repo wurde nicht für das OpenCR-Board erstellt. Da es in vergleichbarer Form jedoch später auf diesem laufen soll, wird auf as Board eingegangen.
+für einen Start mit dem durch den micro-ros-setup muss dieser verfügbar sein, das geht durch das Kommando:
+    source (microros_agent_pfad)/install/setup.bash
 
-Durch das öffnen eines neuen Terminals kann der erfolgreiche Start mit :
+dann starten durch das Kommando:
+    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
+
+**Kommunikation der Nodes:**
+Durch das Öffnen eines neuen Terminals kann der erfolgreiche Start mit :
 
     ros2 node list
 
@@ -75,7 +85,8 @@ für den rviz-teil wird empfohlen, in den ros-workspace zu gehen und das kommand
     colcon build --packages-select rviz_Greifarm
 
 auszuführen
-zuletzt ist in den Package-Pfad zu gehen:
+zuletzt ist zu sourcen und in den Package-Pfad zu gehen:
+    source (rviz_package_pfad)/install/setup.bash
     cd rviz_Greifarm 
     
 und dann final das Kommando:
