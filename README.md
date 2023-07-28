@@ -55,6 +55,7 @@ genutzt wurde bislang nur ubuntu. Für ubuntu muss noch das Kommando:
 ausgeführt werden. 
 
 **Pico:**
+
 Um zu schauen, dass der Pico verbunden ist, hilft das Kommando:
 
     snap interface serial-port
@@ -68,6 +69,7 @@ Jetzt kann endlich der Node gestartet werden mit:
     micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
     
 **OPENCR-Board**:
+
 Das repo wurde nicht für das OpenCR-Board erstellt. Da es in vergleichbarer Form jedoch später auf diesem laufen soll, wird auf as Board eingegangen.
 für einen Start mit dem durch den micro-ros-setup muss dieser verfügbar sein, das geht durch das Kommando:
     source (microros_agent_pfad)/install/setup.bash
@@ -76,6 +78,7 @@ dann starten durch das Kommando:
     ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
 
 **Kommunikation der Nodes:**
+
 Durch das Öffnen eines neuen Terminals kann der erfolgreiche Start mit :
 
     ros2 node list
