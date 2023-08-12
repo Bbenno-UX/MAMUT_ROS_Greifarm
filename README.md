@@ -17,6 +17,7 @@ Der Zweck dieses Repos ist Momentan die Darstellung eines Beispiels, wie einzeln
 Es sei gesagt, dass die Nodes mit Ubuntu 22.04 und ROS2 Humble Hawksbill erstellt wurden und vorausgesetzt, dass dieses installiert ist.
 Es kann nicht gerantiert werden, dass dieses auf anderen Plattformen funktioniert.
 **Funktion**:
+
 Der Rviz-Node startet neben der Grafischen Darstellung auch den "joint-state-publisher", welcher den Status des Freiheitsgrades ausgibt. 
 Interessanterweise kann micro-ROS diesen nicht selbst verarbeiten. Darum wurde als kurzfristige Lösung entschieden, einen zwischen-Node namens "py_jointsub" zu erstellen, 
 der die Message aufniommt und in geringerer Frequenz publisht.
@@ -30,6 +31,7 @@ zunächst in die bash, in den ROS-Workspace gehen(falls nicht vorhanden, einfach
     cd branch_opencr
 
 **RVIZ-Node:**
+
 RViZ:
 Für den Fall, dass nur die Light-version von ROS2 installiert wurde, müssen die Abhängigkeiten installiert werden.
 ROS-Packages geben normalerweise die Abhängigkeiten in der Datei "package.xml" für die leichte Installation mit an
@@ -46,12 +48,14 @@ zum Finalen ausführen gibt es das Kommando:
     ros2 launch rviz_Greifarm display.launch.py model:=rviz_Greifarm/urdf/Eurobot_konzept_idee.urdf
     
 **py_jointsub:**
+
 Der Node hat keine nennenswerten Abhängigkeiten, einfach:
     colcon build --packages-select py_jointsub
     source install/setup.bash
     ros2 run py_jointsub listner
 
 **OpenCR-Board**:
+
 Um das OpenCR-Board ans laufen zu bringen, braucht die Arduino IDE zugriff auf die URL. Das geht mit:
 File>Preferences
 bei "Additional boards manager URLS" den Link:
@@ -75,6 +79,7 @@ Das OpenCR-Board ist sehr eigen. Es wird empfohlen, vor dem Upload:
 Wenn das Board geflasht ist, dann muss der micro-ros-agent die Verbindung zum ROS-Netzwerk herstellen.
 
 **Micro-Ros:**
+
 Es sei gesagt, dass Micro-ros probleme machen kann, wenn man es in einen Workspace mit restlichen Rosnodes schmeisst, weswegen ein seperater Workspace zu erstellen empfohlen wird.
 Folgender Link beinhaltet eine beschreibung, wie dieser zu erstellen ist:
 
@@ -95,6 +100,7 @@ Nun den micro-ros-agent starten mit:
 nachgeguckt werden.
 
 **launch multipler Nodes:**
+
 Es kann, wenn alle Packages im selben Ordner liegen, auch alles gleichzeitig durch ein Kommando gestartet werden:
     ros2 launch rviz_Greifarm display.launch_all.py model:=rviz_Greifarm/urdf/open_manipulator_x.urdf
 Die Datei "display.launch_all.py" soll zeigen, wie so etwas gemacht werden kann.
