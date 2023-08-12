@@ -6,8 +6,11 @@ Das Packet wurde in erster linie erstellt, um mit ROS ein wenig zu lernen und is
 Der Zweck dieses Repos ist Momentan die Darstellung eines Beispiels, wie einzelne Aspekte des ROS-Frameworks kombiniert werden können. Durch eine .urdf (universal robot description file) Datei kann der Zusammenhang einzelner Roboterteile zueinander beschrieben werden. Die Roboterteile können als STL mesh gegeben (wie in diesem Fall, diese befinden sich im subordner "meshes" des rviz-teils) oder durch die urdf-Datei durch Primitive wie Zylinder und Quader beschrieben werden. Rviz, das diese urdf-Datei ausliest, gibt den aktuellen status eines Freiheitsgerades (joints, welche nicht die Bezeichnung "fixed" hat) also sogenannte jointstate-msg aus. Diese message besteht aus:
 
 -Name des Joints 
+
 -Position 
+
 -Geschwindigkeit 
+
 -Kraft 
 
 
@@ -23,7 +26,7 @@ Zuletzt wird mit der Arduino IDE (anders nicht möglich) ein Sketch auf das Open
 
 zunächst in die bash, in den ROS-Workspace gehen(falls nicht vorhanden, einfach neuen Ordner erstellen) und das Repository klonen:
 
-    git clone DUMMY
+    git clone -b OpenCR_Manip https://github.com/Bbenno-UX/MAMUT_ROS_Greifarm.git
     cd branch_opencr
 
 **RVIZ-Node:**
