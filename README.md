@@ -1,105 +1,99 @@
-Dies ist eine Demo für einen Greifarm, welcher durch das ROS2 Visualization tool (rviz2)
-angesteuert wird.
-Das Projekt ist unvollständig und wird vorraussichtlich sowohl um eine Fahrbasis als auch durch Sensoren ergänzt. 
-Der Zweck dieses Repos ist Momentan die Darstellung eines Beispiels, wie einzelne Aspekte des ROS-Frameworks kombiniert werden können.
-Durch eine .urdf (universal robot description file) Datei kann der Zusammenhang einzelner Roboterteile zueinander beschrieben werden. 
-Die Roboterteile können als STL mesh gegeben (wie in diesem Fall, diese befinden sich im subordner "meshes" des rviz-teils) oder durch die urdf-Datei durch Primitive wie Zylinder und Quader beschrieben werden.
-Rviz, das diese urdf-Datei ausliest, gibt den aktuellen status eines Freiheitsgerades (joints, welche nicht die Bezeichnung "fixed" hat) also sogenannte 
-jointstate-msg aus.
-Diese message besteht aus:
+Dies ist der branch der MAMUT-Micro-ROS-Demos für das OpenCR-board.
+Es handelt sich um ein selbst geschriebenes Paket, um den Openmanipulator-X mithilfe des OpenCR-Boards und des Robot Visualizers (rviz) zu kontrollieren.
+**Es mag bereits solche Pakete geben!**
+Das Packet wurde in erster linie erstellt, um mit ROS ein wenig zu lernen und ist deshalb noch relativ minimalistisch.
 
-	-Name des Joints 
-	-Position 
-	-Geschwindigkeit 
-	-Kraft 
-alle als Datenfeld gegeben. Die Position in dem Datenfeld gibt die "nummer" des joints wieder, position[1] ist die position des zweiten joints.
-Diese Message kann von einem micro-ROS Node, der auf einem Mikrocontroller wie dem Raspberry Pi Pico läuft, "gehört" werden.
-Zu den Grundprinzipien wie Publishe rund Subscriber wird auf:
-https://answers.ros.org/question/185205/what-are-publishers-and-subscribers/
-verwiesen und empfohlen, diese entweder in Python oder C++ einmal auszutesten.
+Der Zweck dieses Repos ist Momentan die Darstellung eines Beispiels, wie einzelne Aspekte des ROS-Frameworks kombiniert werden können. Durch eine .urdf (universal robot description file) Datei kann der Zusammenhang einzelner Roboterteile zueinander beschrieben werden. Die Roboterteile können als STL mesh gegeben (wie in diesem Fall, diese befinden sich im subordner "meshes" des rviz-teils) oder durch die urdf-Datei durch Primitive wie Zylinder und Quader beschrieben werden. Rviz, das diese urdf-Datei ausliest, gibt den aktuellen status eines Freiheitsgerades (joints, welche nicht die Bezeichnung "fixed" hat) also sogenannte jointstate-msg aus. Diese message besteht aus:
 
-vorab sei empfohlen, benötigte Packages zu installieren:
-
-    sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi doxygen git python3
+-Name des Joints 
+-Position 
+-Geschwindigkeit 
+-Kraft 
 
 
-Als Mikrocontroller wurde an der stelle der Raspberry Pi Pico genutzt, was heißt, dass das PICO-SDK hierfür installiert sein muss. Falls nicht vorhanden, kann die Datei:
-./microros_pkg/micro_ros_raspberrypi_pico_sdk2/build/pico_micro_ros_example.uf2 
-auf einen Pico geladen werden.
+Es sei gesagt, dass die Nodes mit Ubuntu 22.04 und ROS2 Humble Hawksbill erstellt wurden und vorausgesetzt, dass dieses installiert ist.
+Es kann nicht gerantiert werden, dass dieses auf anderen Plattformen funktioniert.
+**Funktion**:
+Der Rviz-Node startet neben der Grafischen Darstellung auch den "joint-state-publisher", welcher den Status des Freiheitsgrades ausgibt. 
+Interessanterweise kann micro-ROS diesen nicht selbst verarbeiten. Darum wurde als kurzfristige Lösung entschieden, einen zwischen-Node namens "py_jointsub" zu erstellen, 
+der die Message aufniommt und in geringerer Frequenz publisht.
+Zuletzt wird mit der Arduino IDE (anders nicht möglich) ein Sketch auf das OpenCR-Board geflasht und der micro-ros-agent schließt das Board quasi an das Netzwerk an.
 
-Zur installation des Pico-SDKs wird auf: 
-https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf 
-verwiesen.
+**Installation**:
 
-Wichtig ist es hier, die Umgebungsvariable:
-"PICO_SDK_PATH"
-zu setzen.
-Dies kann durch einen Befehl wie: 
-    export PICO_SDK_PATH=(Installationspfad)/pico/pico-sdk
-getätigt werden.
+zunächst in die bash, in den ROS-Workspace gehen(falls nicht vorhanden, einfach neuen Ordner erstellen) und das Repository klonen:
 
-Ist die .uf2 Datei für den Flash des Pico nun geladen, muss der micro-ros-agent verbindung zum pico aufnehmen, damit dieser mit dem Rest des ROS-Netzwerks
-kommunizieren kann.
+    git clone DUMMY
+    cd branch_opencr
 
-Der micro-ros-agent ist nicht standardmäßig installiert. Er kann entweder installiert werden durch: 
+**RVIZ-Node:**
+RViZ:
+Für den Fall, dass nur die Light-version von ROS2 installiert wurde, müssen die Abhängigkeiten installiert werden.
+ROS-Packages geben normalerweise die Abhängigkeiten in der Datei "package.xml" für die leichte Installation mit an
+Dies geht mit rosdep:
+    sudo apt update && rosdep update
+    rosdep install --from-paths rviz_Greifarm -y
+Wenn dies erledigt ist, kann mithilfe von:
+    colcon build --packages-select rviz_Greifarm
+installiert werden
+für das Ausführen muss ROS wissen, wo sich das Package befindet:
+    source install/setup.bash
+zum Finalen ausführen gibt es das Kommando:
 
-    sudo snap install micro-ros-agent
-
-ODER durch den micro-ros-setup erstellt werden:
-https://micro.ros.org/docs/tutorials/core/first_application_linux/
-WICTHIG: für Turtlebot-Nutzer wird empfohlen, die Umgebungsvariable "ROS_DOMAIN_ID" nicht zu setzen, sonst findet ROS den microros-node nicht
-AUSSERDEM: für das OpenCR board wird der micro-ros-setup empfohlen. 
-genutzt wurde bislang nur ubuntu. Für ubuntu muss noch das Kommando:
-
-    sudo snap set core experimental.hotplug=true && sudo systemctl restart snapd
-
-ausgeführt werden. 
-
-**Pico:**
-
-Um zu schauen, dass der Pico verbunden ist, hilft das Kommando:
-
-    snap interface serial-port
-
-Ist er verbunden, muss der micro-ros-agent mit dem Port verbunden werden:
-
-    snap connect micro-ros-agent:serial-port snapd:pico
-
-Jetzt kann endlich der Node gestartet werden mit:
-
-    micro-ros-agent serial --dev /dev/ttyACM0 baudrate=115200
+    ros2 launch rviz_Greifarm display.launch.py model:=rviz_Greifarm/urdf/Eurobot_konzept_idee.urdf
     
-**OPENCR-Board**:
+**py_jointsub:**
+Der Node hat keine nennenswerten Abhängigkeiten, einfach:
+    colcon build --packages-select py_jointsub
+    source install/setup.bash
+    ros2 run py_jointsub listner
 
-Das repo wurde nicht für das OpenCR-Board erstellt. Da es in vergleichbarer Form jedoch später auf diesem laufen soll, wird auf as Board eingegangen.
-für einen Start mit dem durch den micro-ros-setup muss dieser verfügbar sein, das geht durch das Kommando:
-    source (microros_agent_pfad)/install/setup.bash
+**OpenCR-Board**:
+Um das OpenCR-Board ans laufen zu bringen, braucht die Arduino IDE zugriff auf die URL. Das geht mit:
+File>Preferences
+bei "Additional boards manager URLS" den Link:
 
-am besten an der Stelle den RESET-Knopf am Board drücken, um die Verbindung initialisieren zu können
-dann starten durch das Kommando:
+https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/package_opencr_index.json
+
+hereinladen. Wenn schon ein Link drin ist, bei mit einem "," separieren.
+Dann: Tools>Boards>Boards-Manager
+Dort nach dem OpenCR board suchen und installieren.
+Außerdem muss die Arduino-Bibliothek "Dynamixel2Arduino" installiert werden. 
+
+Dann am besten den Repository-Sketch in den Arduino-Pfad verschieben
+    cp -r Arduino/opencr_manip ${ARDUINO_ORDNER}/opencr_manip
+
+WICHTIG:
+Das OpenCR-Board ist sehr eigen. Es wird empfohlen, vor dem Upload:
+-Button SW2 drücken
+-RESET Button drücken
+-RESET Button loslassen
+-Button SW2 loslassen
+Wenn das Board geflasht ist, dann muss der micro-ros-agent die Verbindung zum ROS-Netzwerk herstellen.
+
+**Micro-Ros:**
+Es sei gesagt, dass Micro-ros probleme machen kann, wenn man es in einen Workspace mit restlichen Rosnodes schmeisst, weswegen ein seperater Workspace zu erstellen empfohlen wird.
+Folgender Link beinhaltet eine beschreibung, wie dieser zu erstellen ist:
+
+https://micro.ros.org/docs/tutorials/core/first_application_linux/
+
+Ist der Agent gebaut, ist in den Micro-Ros-Workspace zu navigieren:
+    cd microros_ws
+    source install/setup.bash
+
+Vorher sollte geguckt werden, dass die Variable "ROS_DOMAIN_ID" nicht gesetzt ist, kann mit:
+    echo $ROS_DOMAIN_ID
+überprüft werden, es sollte eine leere Zeile zurückgegeben werden
+Nun den micro-ros-agent starten mit:
 
     ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
+/dev/ttyACM0 durch aktuellen Port ersetzten, kann durch ein- und ausstecken, jeweils gefolgt vom Befehl:
+    ls /dev/tty*
+nachgeguckt werden.
 
-**Kommunikation der Nodes:**
-
-Durch das Öffnen eines neuen Terminals kann der erfolgreiche Start mit :
-
-    ros2 node list
-
-geprüft werden.
-
-für den rviz-teil wird empfohlen, in den ros-workspace zu gehen und das kommando:
-
-    colcon build --packages-select rviz_Greifarm
-
-auszuführen
-zuletzt ist zu sourcen und in den Package-Pfad zu gehen:
-    source (rviz_package_pfad)/install/setup.bash
-    cd rviz_Greifarm 
-    
-und dann final das Kommando:
-
-    ros2 launch rviz_Greifarm display.launch.py model:=urdf/Eurobot_konzept_idee.urdf
-
-auszuführen.  Nun kann durch rviz der Greifarm kontrolliert werden.
+**launch multipler Nodes:**
+Es kann, wenn alle Packages im selben Ordner liegen, auch alles gleichzeitig durch ein Kommando gestartet werden:
+    ros2 launch rviz_Greifarm display.launch_all.py model:=rviz_Greifarm/urdf/open_manipulator_x.urdf
+Die Datei "display.launch_all.py" soll zeigen, wie so etwas gemacht werden kann.
+Aufgrund der micro-ros-konflikte wird dies jedoch nicht empfohlen.
 

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="multishape">
+<xacro:property name="pfad_1" value="package://rviz_Greifarm/meshes/grundling.stl" />
+<xacro:property name="pfad_2" value="package://rviz_Greifarm/meshes/mittelling.stl" />
+<xacro:property name="pfad_3" value="package://rviz_Greifarm/meshes/endling.stl" />
+<xacro:macro name="default_origin">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+</xacro:macro>
+<xacro:macro name="default_border" params="lim">
+    <limit effort="30" velocity="1.0" lower="${lim}" upper="50.7" />
+</xacro:macro>
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <link name="base_link">
+    <visual>
+      <geometry>
+
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="world_to_base_link" type="fixed">
+
+    <parent link="base_link"/>
+    <child link="fundii"/>
+    <axis xyz=" 0 0 1"/>
+    <xacro:default_border lim="500"/>
+
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="fundii">
+    <visual>
+      <geometry>
+        <mesh filename="${pfad_1}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="horizontal" type="prismatic">
+
+    <parent link="fundii"/>
+    <child link="guide_horizontal"/>
+    <axis xyz=" 0 1 0"/>
+    <limit effort="30" velocity="1.0" lower="-42.2" upper="50.7" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="guide_horizontal">
+    <visual>
+      <geometry>
+        <mesh filename="${pfad_2}"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+  <link name="ruessel">
+    <visual>
+      <geometry>
+        <mesh filename="${pfad_3}"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+  <joint name="vertikal" type="prismatic">
+
+    <parent link="guide_horizontal"/>
+    <child link="ruessel"/>
+    <axis xyz=" 0 0 1"/>
+    <limit effort="30" velocity="1.0" lower="-80.2" upper="22.7" />
+    <origin xyz="0 0 0"/>
+  </joint>
+    <joint name="pumpenjoint" type="prismatic">
+
+    <parent link="ruessel"/>
+    <child link="pumpe"/>
+    <axis xyz=" 0 0 1"/>
+    <limit effort="3000" velocity="1000.0" lower="0" upper="1" />
+    <origin xyz="0 0 0"/>
+  </joint>
+    <link name="pumpe">
+    <visual>
+      <geometry>
+      </geometry>
+    </visual>
+  </link>
+
+</robot>
+

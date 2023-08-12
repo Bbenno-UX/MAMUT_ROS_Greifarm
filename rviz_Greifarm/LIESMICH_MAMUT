@@ -1,0 +1,15 @@
+Benötigt für build des Packages: die dependency joint-state-publisher-gui, installierbar mit
+
+sudo apt install joint-state-publisher-gui
+
+genutzt wurde das tutorial:
+https://docs.ros.org/en/humble/Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html
+
+Der Befehl für den launch lautet:
+
+ros2 launch rviz_Greifarm display.launch.py model:=urdf/minimalistischer_Greifarm_Yves.urdf
+ros2 launch rviz_Greifarm display.launch.py model:=urdf/Eurobot_konzept_idee.urdf
+
+(wichtig! für die ausführung des befehls muss man sich im ordner des packages befinden(der Ordner "rviz_Greifarm" mit images, launch, meshes usw. Ordern drin), ist im Tutorial auch so)
+
+
