@@ -69,6 +69,7 @@ Dort nach dem OpenCR board suchen und installieren.
 Außerdem muss die Arduino-Bibliothek "Dynamixel2Arduino" installiert werden. 
 
 Dann am besten den Repository-Sketch in den Arduino-Pfad verschieben
+
     cp -r Arduino/opencr_manip ${ARDUINO_ORDNER}/opencr_manip
 
 WICHTIG:
