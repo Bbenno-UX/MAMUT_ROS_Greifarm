@@ -16,6 +16,7 @@ Der Zweck dieses Repos ist Momentan die Darstellung eines Beispiels, wie einzeln
 
 Es sei gesagt, dass die Nodes mit Ubuntu 22.04 und ROS2 Humble Hawksbill erstellt wurden und vorausgesetzt, dass dieses installiert ist.
 Es kann nicht gerantiert werden, dass dieses auf anderen Plattformen funktioniert.
+
 **Funktion**:
 
 Der Rviz-Node startet neben der Grafischen Darstellung auch den "joint-state-publisher", welcher den Status des Freiheitsgrades ausgibt. 
