@@ -146,6 +146,8 @@ void setup() {
   set_microros_transports();
   initt();
   bool success=false;
+  //folgender Code ist für die Allokation der jointmessage. Ros stellt funktionen für die Bereitstellung von Speicher bereit.
+  //für den Typ "Multiarray" ging das bei mir nicht,darum ist das bei mir separat
      static micro_ros_utilities_memory_conf_t conf = {0};
      conf.max_string_capacity = 50;
     conf.max_ros2_type_sequence_capacity = 10;
@@ -155,16 +157,19 @@ void setup() {
    &recv_msg,
    conf
    );
+  //allokation des Speichers für einen Multiarray, das ist WICHTIG, da ROS-Node sonst abstürzt
+  //für array-förmige Messages müssen rekursiv für jedes attribut die ressourcen bereitgestellt werden,
+  //am besten hierfür im ROS-wiki nachgucken, bsp Int32Multiarray https://docs.ros.org/en/lunar/api/std_msgs/html/msg/Int32MultiArray.html
   mmsg.layout.dim.data = (std_msgs__msg__MultiArrayDimension*)malloc(2*sizeof(std_msgs__msg__MultiArrayDimension));
 //msg_sensors->data.data = (int32_t*)malloc(sizeof(senors)); msg_sensors->data.capacity = 1; msg_sensors->data.size = sizeof(senors)/sizeof(int32_t); memcpy(msg_sensors->data.data , senors, sizeof(senors));
   mmsg.data.data = (int32_t * ) malloc(5 * sizeof(int32_t));
-	mmsg.data.size = 0;
-	mmsg.data.capacity = 5;
+  mmsg.data.size = 0;
+  mmsg.data.capacity = 5;
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);  
   
   delay(2000);
-
+  //folgende funktionen sind wichtig für die initialisierung des Nodes, fehlt eine, wird der Node nicht gestartet
   allocator = rcl_get_default_allocator();
 
   //create init_options
