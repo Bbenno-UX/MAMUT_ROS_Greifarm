@@ -74,10 +74,15 @@ Dann am besten den Repository-Sketch in den Arduino-Pfad verschieben
 
 WICHTIG:
 Das OpenCR-Board ist sehr eigen. Es wird empfohlen, vor dem Upload:
+
 -Button SW2 drücken
+
 -RESET Button drücken
+
 -RESET Button loslassen
+
 -Button SW2 loslassen
+
 Wenn das Board geflasht ist, dann muss der micro-ros-agent die Verbindung zum ROS-Netzwerk herstellen.
 
 **Micro-Ros:**
