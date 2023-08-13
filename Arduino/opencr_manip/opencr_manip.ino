@@ -9,7 +9,6 @@
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 #include <std_msgs/msg/int32_multi_array.h>
-#include <std_msgs/msg/int32.h>
 #include <sensor_msgs/msg/joint_state.h>
 #include <rmw_microros/rmw_microros.h>
 #define ANZAHL_DYNAMIXEL 5
@@ -63,6 +62,7 @@ void sr_handler(int index,char* akt){
         if (result == false)
         {
           error_loop();
+	  //Soll ggf. vorhandene Fehler über UART-Port des OpenCR-internen Arduino ausgeben, nicht der gleiche wie der USB-Port
           Serial1.println(glog);
           Serial1.print("Failed to add sync write handler\n");
           return;
@@ -74,12 +74,9 @@ void sr_handler(int index,char* akt){
           Serial1.println(sync_write_handler_index);
         }
 }
-void sync_writ(int index, int32_t* data){
-//unnütz glaube
-result = dxl_wb.syncWrite(index, ids, 5, (int32_t *)(&data[0]), 1, &glog);
-}
+
 void initt(){
-  result = dxl_wb.init(DEVICE_NAME, 1000000);
+      result = dxl_wb.init(DEVICE_NAME, 1000000);
       result = dxl_wb.scan(get_id, &scan_cnt, range,&glog);
       if (result == false)
       {
@@ -136,7 +133,6 @@ void subscription_callback(const void * msgin)
     //posis[3]++;
   for(int i=0;i<5;i++){
     posis[i]=rest_4096(((int)(msggg->position.data[i]*umrechnungsfaktor))+offsets[i]);
-  
   }
   result = dxl_wb.syncWrite(0, ids, ANZAHL_DYNAMIXEL, (int32_t *)posis, 1, &plog);
   //sync_writ(1,posis);
@@ -148,14 +144,14 @@ void setup() {
   bool success=false;
   //folgender Code ist für die Allokation der jointmessage. Ros stellt funktionen für die Bereitstellung von Speicher bereit.
   //für den Typ "Multiarray" ging das bei mir nicht,darum ist das bei mir separat
-     static micro_ros_utilities_memory_conf_t conf = {0};
-     conf.max_string_capacity = 50;
-    conf.max_ros2_type_sequence_capacity = 10;
-    conf.max_basic_type_sequence_capacity = 10;
-   success = micro_ros_utilities_create_message_memory(
-   ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, JointState),
-   &recv_msg,
-   conf
+  static micro_ros_utilities_memory_conf_t conf = {0};
+  conf.max_string_capacity = 50;
+  conf.max_ros2_type_sequence_capacity = 10;
+  conf.max_basic_type_sequence_capacity = 10;
+  success = micro_ros_utilities_create_message_memory(
+   	ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, JointState),
+  	 &recv_msg,
+   	conf
    );
   //allokation des Speichers für einen Multiarray, das ist WICHTIG, da ROS-Node sonst abstürzt
   //für array-förmige Messages müssen rekursiv für jedes attribut die ressourcen bereitgestellt werden,
