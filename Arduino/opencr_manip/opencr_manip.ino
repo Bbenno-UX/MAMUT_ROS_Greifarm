@@ -75,7 +75,7 @@ void sr_handler(int index,char* akt){
         }
 }
 void sync_writ(int index, int32_t* data){
-
+//unnütz glaube
 result = dxl_wb.syncWrite(index, ids, 5, (int32_t *)(&data[0]), 1, &glog);
 }
 void initt(){
