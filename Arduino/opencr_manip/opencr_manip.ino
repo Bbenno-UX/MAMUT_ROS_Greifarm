@@ -12,7 +12,7 @@
 #include <std_msgs/msg/int32.h>
 #include <sensor_msgs/msg/joint_state.h>
 #include <rmw_microros/rmw_microros.h>
-#define ANZAHL_DYNAMIXEL 2
+#define ANZAHL_DYNAMIXEL 5
 #if defined(__OPENCM904__)
   #define DEVICE_NAME "3" //Dynamixel on Serial3(USART3)  <-OpenCM 485EXP
 #elif defined(__OPENCR__)
