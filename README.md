@@ -55,7 +55,7 @@ Der Node hat keine nennenswerten Abhängigkeiten, einfach:
     source install/setup.bash
     ros2 run py_jointsub listner
 
-**OpenCR-Board**:
+**OpenCR-Board vund Arduino**:
 
 Um das OpenCR-Board ans laufen zu bringen, braucht die Arduino IDE zugriff auf die URL. Das geht mit:
 File>Preferences
@@ -71,6 +71,14 @@ Außerdem muss die Arduino-Bibliothek "Dynamixel2Arduino" installiert werden.
 Dann am besten den Repository-Sketch in den Arduino-Pfad verschieben
 
     cp -r Arduino/opencr_manip ${ARDUINO_ORDNER}/opencr_manip
+
+Micro-ros:
+Die Micro-ros-library ist ebenfalls zu istallieren, damit der Sketch kompiliert werden kann.
+Die Library ist leider nicht direkt in der Arduino IDE zur schnellen installation abrufbar, darum wird auf die Github seite von Micro-ros für Arduino verwiesen: 
+
+https://github.com/micro-ROS/micro_ros_arduino
+
+Es sei gesagt, dass unter den Releases explizit humble hierfür empfohlen wird.
 
 WICHTIG:
 Das OpenCR-Board ist sehr eigen. Es wird empfohlen, vor dem Upload:
