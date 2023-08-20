@@ -55,7 +55,7 @@ Der Node hat keine nennenswerten Abhängigkeiten, einfach:
     source install/setup.bash
     ros2 run py_jointsub listner
 
-**OpenCR-Board vund Arduino**:
+**OpenCR-Board und Arduino**:
 
 Um das OpenCR-Board ans laufen zu bringen, braucht die Arduino IDE zugriff auf die URL. Das geht mit:
 File>Preferences
