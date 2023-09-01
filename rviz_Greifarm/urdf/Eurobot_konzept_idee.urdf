@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="multishape">
-<xacro:property name="pfad_1" value="package://urdf_tutorial/meshes/grundling.stl" />
-<xacro:property name="pfad_2" value="package://urdf_tutorial/meshes/mittelling.stl" />
-<xacro:property name="pfad_3" value="package://urdf_tutorial/meshes/endling.stl" />
+<xacro:property name="pfad_1" value="package://rviz_Greifarm/meshes/grundling.stl" />
+<xacro:property name="pfad_2" value="package://rviz_Greifarm/meshes/mittelling.stl" />
+<xacro:property name="pfad_3" value="package://rviz_Greifarm/meshes/endling.stl" />
 <xacro:macro name="default_origin">
     <origin xyz="0 0 0" rpy="0 0 0"/>
 </xacro:macro>
