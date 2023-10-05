@@ -15,7 +15,9 @@ Diese message besteht aus:
 alle als Datenfeld gegeben. Die Position in dem Datenfeld gibt die "nummer" des joints wieder, position[1] ist die position des zweiten joints.
 Diese Message kann von einem micro-ROS Node, der auf einem Mikrocontroller wie dem Raspberry Pi Pico läuft, "gehört" werden.
 Zu den Grundprinzipien wie Publishe rund Subscriber wird auf:
+
 https://answers.ros.org/question/185205/what-are-publishers-and-subscribers/
+
 verwiesen und empfohlen, diese entweder in Python oder C++ einmal auszutesten.
 
 vorab sei empfohlen, benötigte Packages zu installieren:
