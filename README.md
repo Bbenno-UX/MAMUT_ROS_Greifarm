@@ -26,7 +26,9 @@ vorab sei empfohlen, benötigte Packages zu installieren:
 
 
 Als Mikrocontroller wurde an der stelle der Raspberry Pi Pico genutzt, was heißt, dass das PICO-SDK hierfür installiert sein muss. Falls nicht vorhanden, kann die Datei:
+
 ./microros_pkg/micro_ros_raspberrypi_pico_sdk2/build/pico_micro_ros_example.uf2 
+
 auf einen Pico geladen werden.
 
 Zur installation des Pico-SDKs wird auf: 
