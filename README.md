@@ -32,14 +32,18 @@ Als Mikrocontroller wurde an der stelle der Raspberry Pi Pico genutzt, was heiß
 auf einen Pico geladen werden.
 
 Zur installation des Pico-SDKs wird auf: 
+
 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf 
+
 verwiesen.
 
 Wichtig ist es hier, die Umgebungsvariable:
 "PICO_SDK_PATH"
 zu setzen.
 Dies kann durch einen Befehl wie: 
+
     export PICO_SDK_PATH=(Installationspfad)/pico/pico-sdk
+    
 getätigt werden.
 
 Ist die .uf2 Datei für den Flash des Pico nun geladen, muss der micro-ros-agent verbindung zum pico aufnehmen, damit dieser mit dem Rest des ROS-Netzwerks
