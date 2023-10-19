@@ -28,7 +28,7 @@ Zuletzt wird mit der Arduino IDE (anders nicht möglich) ein Sketch auf das Open
 
 zunächst in die bash, in den ROS-Workspace gehen(falls nicht vorhanden, einfach neuen Ordner erstellen) und das Repository klonen:
 
-    git clone -b OpenCR_Manip https://github.com/Bbenno-UX/MAMUT_ROS_Greifarm.git
+    git clone -b opencr_manip https://github.com/Bbenno-UX/MAMUT_ROS_Greifarm.git
     cd branch_opencr
 
 **RVIZ-Node:**
